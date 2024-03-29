@@ -9,13 +9,13 @@ namespace backEndTest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MyController : ControllerBase
+    public class CreditoController : ControllerBase
     {
         private readonly ICreditoRepository _creditorepository;
         private readonly IResultadoRepository _resultadoRepository;
         private readonly ProcessamentoService _processamento;
 
-        public MyController(ICreditoRepository creditoRepository, IResultadoRepository resultadoRepository,ProcessamentoService processamento)
+        public CreditoController(ICreditoRepository creditoRepository, IResultadoRepository resultadoRepository,ProcessamentoService processamento)
         {
             _creditorepository = creditoRepository;
             _resultadoRepository = resultadoRepository;
