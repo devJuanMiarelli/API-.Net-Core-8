@@ -1,0 +1,10 @@
+- O que são Microsserviços ?
+
+É um termo utilizado dentro do assunto de Arquitetura de Software, para representar uma forma de desenvolvimento, onde cada "feature" possa ser pensada, desenvolvida e
+disponibilizada de forma independente. Uma arquitetura onde há uma coleção de pequenos serviços autônomos e independentem, que implementam uma única funcionalidade.  
+
+- Como funcionam ?
+
+São como pequenas partes de um quebra-cabeças, que funcionam independentemente, realizando suas determinadas funções. Podendo ser completamente diferentes, ou seja, 
+diversas linguagens e bancos de dados diferentes, desde que a comunicação entre cada uma dessas pequenas peças seja feita de forma padronizada.
+

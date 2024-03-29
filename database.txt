@@ -1,0 +1,49 @@
+CREATE DATABASE back;
+USE back;
+
+CREATE TABLE cliente(
+	nome VARCHAR(256),
+	cpf VARCHAR(14) PRIMARY KEY,
+	estado VARCHAR(2),
+	celular VARCHAR(20)
+);
+
+CREATE TABLE financiamento(
+	id INT IDENTITY(1, 1) PRIMARY KEY,
+	tipo VARCHAR(15),
+	total DECIMAL(18, 2),
+	dataVencimento DATE,
+	cpf_cliente VARCHAR(14),
+	FOREIGN KEY (cpf_cliente) REFERENCES cliente(cpf)
+);
+
+CREATE TABLE parcela(
+	numero INT,
+	valor DECIMAL(18, 2),
+	dataVencimento DATE,
+	dataPagamento DATE,
+	id_financiamento INT,
+	FOREIGN KEY (id_financiamento) REFERENCES financiamento(id)
+);
+
+
+
+SELECT c.nome, c.cpf
+FROM cliente c
+INNER JOIN financiamento f ON c.cpf = f.cpf_cliente
+LEFT JOIN (
+    SELECT id_financiamento, COUNT(*) AS total_parcelas,
+           SUM(CASE WHEN dataPagamento IS NOT NULL THEN 1 ELSE 0 END) AS parcelas_pagas
+    FROM parcela
+    GROUP BY id_financiamento
+) p ON f.id = p.id_financiamento
+WHERE c.estado = 'SP' 
+AND (p.parcelas_pagas * 1.0 / p.total_parcelas) > 0.6;
+
+
+SELECT DISTINCT TOP 4 c.nome, c.cpf
+FROM cliente c
+INNER JOIN financiamento f ON c.cpf = f.cpf_cliente
+INNER JOIN parcela p ON f.id = p.id_financiamento
+WHERE DATEDIFF(DAY, p.dataVencimento, GETDATE()) > 5
+AND p.dataPagamento IS NULL;
